@@ -1,6 +1,6 @@
 module Common
   SERVER = "utopian"
   APP = "pat"
-  STAGE = "dev"
+  STAGE = "prod"
   DISABLE_MOONSHINE = true
 end
