@@ -28,6 +28,6 @@ config.cache_store = :file_store, 'tmp/cache'
 # Mail settings
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
-  :address => 'smtp.powertochange.local',
-  :domain => 'powertochange.local'
+  :address => 'localhost',
+  :domain => 'ccca.org.au'
 }
