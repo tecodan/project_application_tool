@@ -321,8 +321,8 @@ render :partial => "viewer_specifics"
       for person in campus.students
         @campus_stats[campus].students_cnt += 1
 
-        for viewer in person.viewers
-          for profile in viewer.profiles
+        if person.viewer
+          for profile in person.viewer.profiles
             next unless profile.appln && profile.appln.form_id == @current_projects_form.id
 
             @campus_stats[campus].student_profiles << StudentProfile.new(person, profile)
@@ -332,7 +332,7 @@ render :partial => "viewer_specifics"
               @campus_stats[campus].applied_cnt += 1
             elsif profile.class == Applying
               @campus_stats[campus].applied_cnt += 1
-	    end
+	        end
           end
         end
       end
@@ -348,10 +348,21 @@ render :partial => "viewer_specifics"
 
     if @viewer.is_eventgroup_coordinator?(@eg)
       campuses = Campus.all
+    elsif @viewer.person.is_staff_somewhere?
+      ministry_involvements = @viewer.person.ministry_involvements
+      for mi in ministry_involvements
+        if campuses.nil?
+      	  campuses = mi.ministry.campuses.all
+        else
+     	  campuses = campuses + mi.ministry.campuses.all
+     	end
+      end
+      campuses
     else
       campuses = @viewer.person.campuses
     end
   end
+  
  
   private
 
