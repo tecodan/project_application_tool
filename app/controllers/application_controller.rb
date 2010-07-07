@@ -7,15 +7,16 @@ class ApplicationController < ActionController::Base
   include ExceptionNotifiable
 
   if RAILS_ENV == 'production'
-    $server_url = "https://pat.powertochange.org"
+    $server_url = "https://pat.ccca.org.au"
   else
-    $server_url = "http://dev.spt.campusforchrist.org"
+    $server_url = "http://dev.pat.ccca.org.au"
   end
 
   $cim_url = "http://intranet.campusforchrist.org"
-  $sp_email_only = 'projects@campusforchrist.org'
-  $sp_email = "Power to Change Projects <#{$sp_email_only}>"
-  $tech_email_only = 'pat.help@powertochange.org'
+  $sp_email_only = 'projects@ccca.org.au'
+  $sp_email = "CCCA Projects 
+<#{$sp_email_only}>"
+  $tech_email_only = 'pat.help@ccca.org.au'
   
   # let's just sweep everything, it's easier :P
   cache_sweeper :profiles_sweeper
