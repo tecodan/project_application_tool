@@ -16,7 +16,7 @@
             <tbody>
             <% for campus in @campuses %>
                 <TR>
-                    <TD align="center"><%= campus.campus_desc %> (<%= campus.campus_shortDesc%>)</TD>
+                    <TD align="center"><%= campus.name %> (<%= campus.abbrv%>)</TD>
                     <TD align="center"><%= @campus_stats[campus].applied_cnt %></TD>
                     <TD align="center"><%= @campus_stats[campus].accepted_cnt %></TD>
                 </TR>
@@ -45,7 +45,7 @@
                     <TR>
                         <TD align="center"><%= person.name %></TD>
                         <TD align="center"><%= person.viewer.username %></TD>
-                        <TD align="center"><%= campus.campus_shortDesc %></TD>
+                        <TD align="center"><%= campus.abbrv %></TD>
                         <TD align="center"><%= profile.status %></TD>
                         <TD align="center"><%= if profile.class == Acceptance then format_currency profile.support_claimed end %></TD>
                         <TD align="center"><%= if profile.class == Acceptance then format_currency profile.donations_total end %></TD>

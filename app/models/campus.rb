@@ -1,26 +1,25 @@
 class Campus < ActiveRecord::Base
   load_mappings
-
-  has_many :assignments
-  has_many :persons, :through => :assignments
-
+  include Common::Core::Campus
+  
   def self.regional_national_id
-    @@regional_national_id ||= Campus.find_by_campus_shortDesc('Reg/Nat')
+  	@@regional_national_id ||= Campus.find_by_campus_abbrv('Reg/Nat')
   end
-
+  
   def students(options = {})
-    # Following line breaks with a rails bug on eager loading
-    #assignments.find_all_by_assignmentstatus_id(Assignmentstatus.campus_student_ids, 
-    #    :include => { :person => :viewers }, :select => options[:select] ).collect { |a|
-    #  a.person
-    #}
-    assignments.find_all_by_assignmentstatus_id(Assignmentstatus.campus_student_ids,
-        :select => options[:select]
-    ).collect { |a| a.person }
+    # under assumption that everyone with a CI is a student
+    # this is eager loading at the moment, so probably need refactoring.
 
-    #assignments.find(:all,
-    #    :include => { :person => :viewers }, :select => options[:select] ).collect { |a|
-    #  a.person
-    #}
+  	#ministry_student_ids = MinistryRole.all(:conditions => { :type => 'StudentRole' }).compact.collect(&:id)
+  	#Person.all :joins => :ministry_involvements, :limit => 2, :conditions => { :ministry_involvements => { :ministry_id => 1, :ministry_role_id => ministry_student_ids }}
+
+    self.people.all(:select => options[:select])
+
+    #campus_involvements.find_all_by_assignmentstatus_id(Assignmentstatus.campus_student_ids,
+    #    :select => options[:select]
+    #).collect { |a| a.person }
+    
   end
+  
 end
+
