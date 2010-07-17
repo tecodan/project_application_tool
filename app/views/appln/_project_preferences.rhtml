@@ -1,7 +1,8 @@
 <% 
 @projects_options = @eg.projects.find_all_by_hidden(false).collect { |p| [ p.title, p.id ] }
 %>
-
+<p><strong>If you prefer to to apply for only one (1) project, then select the same project for both
+Preference 1 and Preference 2.</strong></p>
 <table cellspacing="0" border="0" cellpadding="0">
   <%#Display dropdown menues for their preferences%>
   <% for i in 1..2 -%>
