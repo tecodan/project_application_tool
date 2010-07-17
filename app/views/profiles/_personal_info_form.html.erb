@@ -14,6 +14,11 @@ What do you normally go by?<BR/>
 
 <%= custom_element_text_field('Last name: ', :appln_person, :preferred_last_name) %>
 
+
+If your legal name is different to the above, please complete the fields below:<BR/>
+<%= custom_element_text_field('Legal First name: ', :appln_person, :first_name) %>
+<%= custom_element_text_field('Legal Last name: ', :appln_person, :last_name) %>
+
 <%= custom_element_item('Gender: ', :appln_person, :gender) do |m,c,classes|
       if Pat::CONFIG[:gender_is_lookup_table]
         collection_select :appln_person, :gender_id, Gender.find(:all), :id, :gender_desc, {}, { :class => classes }
