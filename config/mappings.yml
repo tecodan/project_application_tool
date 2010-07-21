@@ -1,5 +1,5 @@
 person:
-  first_name: legal_first_name
-  last_name: legal_last_name
+  first_name: preferred_fname
+  last_name: preferred_lname
   preferred_first_name: preferred_fname
   preferred_last_name: preferred_lname
