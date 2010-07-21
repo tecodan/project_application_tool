@@ -6,9 +6,11 @@ Please ensure the following campus involvements are correct:
 
 <UL>
   <%- for ci in @appln_person.campus_involvements -%>
-    <LI><%= ci.campus.name %> <%= ci.school_year.name %></LI>
+    <LI><%= ci.campus.name %> (<%= ci.school_year.name -%>) </LI>
   <%- end -%>
 </UL>
 <%- end -%>
 
-To update your campus involvements, please go to the pulse using <A HREF="https://pulse.campusforchrist.org/people/<%= @appln_person.try(:id) %>">this link</A>.
+To update your campus involvements, please go to the pulse using <A 
+HREF="http://pulse.studentlife.org.au/people/<%= @appln_person.try(:id) 
+%>" target="_blank">this link</A>.
