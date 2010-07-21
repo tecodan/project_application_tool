@@ -131,7 +131,8 @@ class SecurityController < ApplicationController
     if result[:error]
       flash[:notice] = result[:error]
     elsif result[:gcx_no_viewer]
-      redirect_to :action => 'link_gcx'
+      # bypass the link old intranet user screen - AUS are not using it
+      redirect_to :action => 'do_link_gcx_new'
     elsif !result[:keep_trying]
       setup_given_viewer_id result[:viewer_id]
     end
