@@ -16,8 +16,8 @@ What do you normally go by?<BR/>
 
 
 If your legal name is different to the above, please complete the fields below:<BR/>
-<%= custom_element_text_field('Legal First name: ', :appln_person, :first_name) %>
-<%= custom_element_text_field('Legal Last name: ', :appln_person, :last_name) %>
+<%= custom_element_text_field('Legal First name: ', :appln_person, :legal_first_name) %>
+<%= custom_element_text_field('Legal Last name: ', :appln_person, :legal_last_name) %>
 
 <%= custom_element_item('Gender: ', :appln_person, :gender) do |m,c,classes|
       if Pat::CONFIG[:gender_is_lookup_table]
