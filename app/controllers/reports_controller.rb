@@ -116,7 +116,7 @@ class ReportsController < ApplicationController
       [
         person.preferred_last_name,
         person.preferred_first_name,
-        person.gender_short,
+        person.human_gender,
         @eg.has_your_campuses ? person.campus_abbrev(:search_arrays => true) : :skip,
         @eg.has_your_campuses ? person.try(:year_in_school).try(:name) : :skip,
         profile.status,
@@ -336,11 +336,11 @@ class ReportsController < ApplicationController
   def generate_cache(viewer_ids)
     viewer_ids << -100 # -100 as some bogus id so that the IN ( ) sql stmt doesn't give an error when empty
     viewer_ids.delete_if { |vid| vid.nil? || vid == '' }
-    viewers = Viewer.find :all, :conditions => "accountadmin_viewer.viewer_id IN (#{viewer_ids.join(',')})", :include => :access
+    viewers = Viewer.find :all, :conditions => "id IN (#{viewer_ids.join(',')})", :include => :person
     viewers_cache = {}
     viewers.each { |v| viewers_cache[v.id] = v }
     
-    person_ids = viewers.collect{|v| v.access.person_id }.compact
+    person_ids = viewers.collect{|v| v.person.id }.compact
     persons = Person.find person_ids
     persons_cache = {}
     persons.each { |p| persons_cache[p.id] = p }
@@ -444,7 +444,7 @@ class ReportsController < ApplicationController
         v = viewers_cache[staff_profile.viewer_id]
 
 	person = nil
-	person = persons_cache[v.access.person_id] if v && v.access
+	person = persons_cache[v.person.id] if v && v.person
 	
         yield staff_profile, nil, v, person
       end
@@ -520,14 +520,14 @@ class ReportsController < ApplicationController
                               ec_entry.emerg_contact2Mobile,
                               ec_entry.emerg_contact2Email)
 
-      emergency_info = EmergencyInfo.new(ec_entry.emerg_medicalNotes, ec_entry.emerg_meds)
+      emergency_info = EmergencyInfo.new(ec_entry.notes, ec_entry.meds)
 
-      birthdate = ec_entry ? ec_entry.emerg_birthdate : ''
+      birthdate = ec_entry ? p.birth_date : ''
       birthdate = birthdate.to_s # might be nil
 
       passport_info = get_passport_info(ac, p, a, ec_entry)
       
-      hp = ec_entry.health_state.try(:name)
+      hp = ec_entry.health_coverage_state # .try(:name)
       health_info = HealthInfo.new(ec_entry.health_number, hp)
       ins_info = InsuranceInfo.new(ec_entry.medical_plan_carrier, ec_entry.medical_plan_number)
       doc_info = DoctorsInfo.new(ec_entry.doctor_name.to_s, ec_entry.doctor_phone.to_s,
@@ -848,7 +848,7 @@ class ReportsController < ApplicationController
   
   # returns a select list with viewers who are accepted to the projects given
   def viewers_with_profile_for_project
-    profiles = Profile.find_all_by_project_id @projects_ids, :include => { :viewer => :persons }
+    profiles = Profile.find_all_by_project_id @projects_ids, :include => { :viewer => :person }
     @profile_type_and_viewers = profiles.collect{ |p| [ p.class.name, p.viewer ] }
     
     # sort first by type of profile, then by name
@@ -899,7 +899,7 @@ class ReportsController < ApplicationController
     for ci in @cost_items
       for profile in (ci.optional? ? 
        ci.optins.collect{ |optin| optin.profile } : 
-       Profile.find_all_by_project_id(ci.project.id))
+       Profile.find_all_by_project_id(ci.project_id))
 
         next if profile.nil? || !@projects.include?(profile.project)
         v = profile.viewer
@@ -1148,9 +1148,9 @@ class ReportsController < ApplicationController
 
   def get_passport_info(ac, p, a, ec_entry)
     if ec_entry
-        PassportInfo.new(ec_entry.emerg_passportNum,
-          ec_entry.emerg_passportExpiry,
-          ec_entry.emerg_passportOrigin)
+        PassportInfo.new(ec_entry.passport_num,
+          ec_entry.passport_expiry,
+          ec_entry.passport_origin)
     else
       PassportInfo.new('', '', '')
     end
