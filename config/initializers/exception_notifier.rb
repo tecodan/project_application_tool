@@ -1,2 +1,2 @@
-ExceptionNotifier.exception_recipients = %w(andrew.roth@c4c.ca)
-ExceptionNotifier.sender_address = %w(pat.help@powertochange.org)
+ExceptionNotifier.exception_recipients = %w(daniel.harsojo@ccca.org.au)
+ExceptionNotifier.sender_address = %w(pat.help@ccca.org.au)

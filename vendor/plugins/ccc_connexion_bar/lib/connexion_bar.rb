@@ -14,8 +14,8 @@ module ActionView
           uri = URI.parse(uri) unless uri.kind_of? URI
           https = Net::HTTP.new(uri.host, uri.port)
           https.use_ssl = (uri.scheme == 'https')
-          https.open_timeout = 2
-          https.read_timeout = 2
+          https.open_timeout = 3
+          https.read_timeout = 3
           begin
             raw_res = https.start do |conn|
               conn.get("#{uri}")

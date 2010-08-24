@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   include ExceptionNotifiable
 
   if RAILS_ENV == 'production'
-    $server_url = "https://pat.ccca.org.au"
+    $server_url = "http://pat.ccca.org.au"
   else
     $server_url = "http://dev.pat.ccca.org.au"
   end

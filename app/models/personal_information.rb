@@ -27,11 +27,11 @@ class PersonalInformation < CustomElement
       person_params = params[:appln_person].clone
       
       # we need to fill in legal first name & last name if it wasn't filled in already
-      if person_params[:first_name].empty?
-        person_params[:first_name] = person_params[:preferred_first_name]
+      if person_params[:legal_first_name].empty?
+        person_params[:legal_first_name] = person_params[:preferred_first_name]
       end
-      if person_params[:last_name].empty?
-        person_params[:last_name] = person_params[:preferred_last_name]
+      if person_params[:legal_last_name].empty?
+        person_params[:legal_last_name] = person_params[:preferred_last_name]
       end
 
       person_params.delete 'email'
