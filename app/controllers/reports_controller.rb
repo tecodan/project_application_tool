@@ -162,13 +162,13 @@ class ReportsController < ApplicationController
       [
         person.preferred_last_name,
         person.preferred_first_name,
-        person.gender_short,
+        person.human_gender,
         acceptance.project.title,
         @eg.has_your_campuses ? person.campus_abbrev(:search_arrays => true) : :skip,
-        @eg.has_your_campuses ? person.year_in_school.year_desc : :skip,
-        person.person_local_phone,
-        person.cell_phone,
-        person.person_email
+        @eg.has_your_campuses ? (person.year_in_school ? person.year_in_school.year_desc : :skip ) : :skip,
+        person.current_address.phone,
+        person.current_address.alternate_phone,
+        person.email
       ].delete_if{ |i| i == :skip }
     }
 
@@ -403,8 +403,8 @@ class ReportsController < ApplicationController
     accepted.sort!{ |a1, a2|
       v1 = viewers_cache[a1.viewer_id]
       v2 = viewers_cache[a2.viewer_id]
-      p1 = persons_cache[v1.access.person_id]
-      p2 = persons_cache[v2.access.person_id]
+      p1 = persons_cache[v1.person.id]
+      p2 = persons_cache[v2.person.id]
 
       v1.name <=> v2.name
     }
@@ -414,7 +414,7 @@ class ReportsController < ApplicationController
       next if a.nil?
       v = viewers_cache[a.viewer_id]
       @answers_cache = make_answers_cache [ a, a.processor_form ]
-      yield ac, a, v, persons_cache[v.access.person_id]
+      yield ac, a, v, persons_cache[v.person.id]
     end
     
     if include_pref1_applns
@@ -432,7 +432,7 @@ class ReportsController < ApplicationController
         next if v.nil?
         @answers_cache = make_answers_cache [ a, a.processor_form ]
         
-        yield nil, a, v, persons_cache[v.access.person_id]
+        yield nil, a, v, persons_cache[v.person.id]
       end
     end
     
@@ -520,14 +520,14 @@ class ReportsController < ApplicationController
                               ec_entry.emerg_contact2Mobile,
                               ec_entry.emerg_contact2Email)
 
-      emergency_info = EmergencyInfo.new(ec_entry.notes, ec_entry.meds)
+      emergency_info = EmergencyInfo.new(ec_entry.emerg_medicalNotes, ec_entry.emerg_meds)
 
-      birthdate = ec_entry ? p.birth_date : ''
+      birthdate = ec_entry ? ec_entry.emerg_birthdate : ''
       birthdate = birthdate.to_s # might be nil
 
       passport_info = get_passport_info(ac, p, a, ec_entry)
       
-      hp = ec_entry.health_coverage_state # .try(:name)
+      hp = ec_entry.health_state.try(:name)
       health_info = HealthInfo.new(ec_entry.health_number, hp)
       ins_info = InsuranceInfo.new(ec_entry.medical_plan_carrier, ec_entry.medical_plan_number)
       doc_info = DoctorsInfo.new(ec_entry.doctor_name.to_s, ec_entry.doctor_phone.to_s,
@@ -701,7 +701,7 @@ class ReportsController < ApplicationController
     target = ac.funding_target(@eg)
     claimed = ac.support_claimed.to_f.to_s
 
-    gender = if p then p.gender_short else 'unknown' end
+    gender = if p then p.human_gender else 'unknown' end
     staff = if v.nil? then 'missing viewer' else (v.is_current_staff?(@eg) ? 'staff' : '') end
      
     participant = [ p ? p.full_name : 'unknown' , gender, staff, (@many_projects ? ac.project.title : nil),
@@ -888,7 +888,7 @@ class ReportsController < ApplicationController
   end
   
   def cost_items
-   @page_title = "People for " + if @cost_items.size == @eg.cost_items.size then
+    @page_title = "People for " + if @cost_items.size == @eg.cost_items.size then
         "All Cost Items"
       elsif @cost_items.size == 1
         "Cost Item " + @cost_items[0].shortDesc
@@ -919,7 +919,7 @@ class ReportsController < ApplicationController
     for ci in @cost_items
       for profile in (ci.optional? ? 
        ci.optins.collect{ |optin| optin.profile } : 
-       Profile.find_all_by_project_id(ci.project_id))
+       Profile.find_all_by_project_id(ci.project.id))
 
         next if profile.nil? || !@projects.include?(profile.project)
         v = profile.viewer
@@ -1168,9 +1168,9 @@ class ReportsController < ApplicationController
 
   def get_passport_info(ac, p, a, ec_entry)
     if ec_entry
-        PassportInfo.new(ec_entry.passport_num,
-          ec_entry.passport_expiry,
-          ec_entry.passport_origin)
+        PassportInfo.new(ec_entry.emerg_passportNum,
+          ec_entry.emerg_passportExpiry,
+          ec_entry.emerg_passportOrigin)
     else
       PassportInfo.new('', '', '')
     end
@@ -1626,5 +1626,7 @@ class ReportsController < ApplicationController
     @skip_title = request.xml_http_request?
     true
   end
+  
+  
   
 end

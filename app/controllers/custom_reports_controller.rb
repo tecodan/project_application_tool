@@ -207,7 +207,7 @@ class CustomReportsController < ApplicationController
 
   def for_viewers_in_project(pids)
     pids = @show_projects.collect(&:id) if pids == 'all'
-    profiles = Profile.find_all_by_project_id pids, :include => [ :appln, { :viewer => :persons } ]
+    profiles = Profile.find_all_by_project_id pids, :include => [ :appln, { :viewer => :person } ]
 
     for profile in profiles
       viewer = profile.viewer

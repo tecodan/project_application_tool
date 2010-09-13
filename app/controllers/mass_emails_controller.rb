@@ -26,8 +26,8 @@ class MassEmailsController < ApplicationController
     classes = get_types_for_emails
 
     profiles = Profile.find_all_by_type_and_project_id(classes, projects.collect(&:id), 
-                 :include => { :viewer => :persons }, 
-                 :select => "#{Person.table_name}.person_email, #{Profile.table_name}.status, #{Profile.table_name}.type, #{Profile.table_name}.class_when_withdrawn"
+                 :include => { :viewer => :person }, 
+                 :select => "#{Person.table_name}.email, #{Profile.table_name}.status, #{Profile.table_name}.type, #{Profile.table_name}.class_when_withdrawn"
                )
 
     # for applying, check the type
