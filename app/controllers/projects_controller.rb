@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
     @pages = @questionnaire.pages
 
     params[:summary] = true
-    bulk_forms([ :appln, { :viewer => :persons } ]) do |acc|
+    bulk_forms([ :appln, { :viewer => :person } ]) do |acc|
       @instances << { :instance => acc.appln,
         :appln => acc.appln,
         :title => "#{acc.viewer.name} Summary Form"

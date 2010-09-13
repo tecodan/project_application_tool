@@ -36,6 +36,11 @@ class Acceptance < Profile
     sc.nil? ? support_coach_none : sc.name
   end
   
+  def support_coach_email
+    sc = support_coach
+    sc.nil? ? "" : sc.email
+  end
+  
   def costing(eg)
     calculate_sums(all_cost_items(eg))
   end
