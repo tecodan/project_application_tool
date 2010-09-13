@@ -78,6 +78,13 @@
   </LI>
   <LI>
     <% content_for(:form) do %>
+      Unidentified donations <%= html_excel_submit_links("unidentified_donations") %>
+    <% end %>
+    <%= render :partial => "report_form", :locals => { :action => "unidentified_donations" } %>
+    <I>For all event groups</I>
+  </LI>
+  <LI>
+    <% content_for(:form) do %>
       Travel List for <%= project_select("travel_list", :default_first => false) %> <%= html_excel_submit_links("travel_list") %><BR/>
       <I>Lists all applicants and their passport information such as birthdate, passport number, passport expiry and passport country.</I><BR/>
       <%= check_box_tag "include_pref1s", "true" %> Include in-progress applications with preference 1 as this project

@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
 
   skip_before_filter :restrict_students, :only => [ :index, :list, :view, :update, 
                                               :travel, :support_received, :costing, 
-                                              :prep_items, :update_support, :use_past_appln ] + 
+                                              :prep_items, :update_support, :use_past_appln, :unidentified_donations ] + 
                                               INFO_ACTIONS
                                               
   before_filter :set_title
@@ -202,13 +202,18 @@ class ProfilesController < ApplicationController
     @submenu_title = "support received"
     @donations = @profile.donations
   end
+  
+  def unidentified_donations
+    @submenu_title = "unidentified donations"
+    @donations = AutoDonation.find_all_by_participant_motv_code Pat::CONFIG[:motv_code_unidentified]
+  end
 
   def view
-    flash[:error] = 'It is extremely important that you do not simply print off your 
-	  travel page from this website. Please click a link that says "printable itinerary pdf" 
-	  such as the one below or the one on the travel page and print your travel information 
-	  from Adobe Acrobat Reader. If you do not have Adobe Acrobat Reader it is available for free 
-	  <a href="http://www.adobe.com/products/acrobat/readstep2.html" target="_blank">here</a>.'
+    # flash[:error] = 'It is extremely important that you do not simply print off your 
+	#  travel page from this website. Please click a link that says "printable itinerary pdf" 
+	#  such as the one below or the one on the travel page and print your travel information 
+	#  from Adobe Acrobat Reader. If you do not have Adobe Acrobat Reader it is available for free 
+	#  <a href="http://www.adobe.com/products/acrobat/readstep2.html" target="_blank">here</a>.'
     @submenu_title = "misc"
   end
 

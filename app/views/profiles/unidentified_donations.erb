@@ -1,0 +1,25 @@
+<div id="unidentified_donations">
+<p>These are donations that are yet to be claimed.</p>
+
+<p>If you believe that one of these deposits may be your support, please contact us at <a href="MAILTO:SLSP@studentlife.org.au">SLSP@studentlife.org.au</a></p>
+
+  <hr/>
+	<table>
+	  <tr>
+	    <th>Date</th>
+	    <th>Transaction ID</th>
+	    <th>Reference</th>
+	    <th>Bank Branch</th>
+	    <th>Amount</th>
+	  </tr>
+		<% for donation in @donations %>
+		  <tr>
+		    <td><%= donation.donation_date.to_date.to_s(:rfc822) %></td>
+		    <td align="right"><%= donation.donation_reference_number %></td>
+		    <td><%= donation.donor_name %></td>
+		    <td><%= donation.donation_type %></td>
+		    <td align="right">$<%= "%0.2f" % donation.amount.to_f %></td>
+
+		<% end %>
+	</table>
+</div>

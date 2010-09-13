@@ -792,6 +792,26 @@ class ReportsController < ApplicationController
     render_report @rows, :sortable => false
   end
   
+  def unidentified_donations
+    @donations = AutoDonation.find_all_by_participant_motv_code Pat::CONFIG[:motv_code_unidentified]
+
+    columns = [ 'donor_name',
+      [ 'donation_type', 'type' ], 
+      [ 'donation_reference_number', 'reference' ], 
+      [ 'donation_date', 'date'] , 
+      [ 'amount', 'amount' ]
+    ]
+
+    @columns = columns_from_model AutoDonation, columns # used for client-side javascript sorting
+    @columns['amount'] = 'currency'
+    
+    @rows = get_rows(@donations, columns)
+
+
+    @page_title = "Unidentified donations Report"
+    render_report @rows
+  end
+  
   def project_paperwork
   end
   
