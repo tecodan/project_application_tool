@@ -350,12 +350,16 @@ render :partial => "viewer_specifics"
       campuses = Campus.all
     elsif @viewer.person.is_staff_somewhere?
       ministry_involvements = @viewer.person.ministry_involvements
+      
       for mi in ministry_involvements
-        if campuses.nil?
-      	  campuses = mi.ministry.campuses.all
-        else
-     	  campuses = campuses + mi.ministry.campuses.all
-     	end
+      	ministries = mi.ministry.self_plus_descendants
+      	ministries.each do |ministry|
+          if campuses.nil?
+      	    campuses = ministry.campuses.all
+          else
+     	    campuses = campuses + ministry.campuses.all
+     	  end
+        end
       end
       campuses
     else
