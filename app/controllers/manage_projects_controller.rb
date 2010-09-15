@@ -11,8 +11,8 @@ class ManageProjectsController < ApplicationController
   before_filter :set_project, :except => [ :index, :list, :create, :new ]
   before_filter :determine_project_roles, :except => [ :index, :list, :new, :create ]
   before_filter :ensure_is_eventgroup_coordinator, :only => [ :new, :create, :destroy ]
-  before_filter :ensure_eventgroup_coordinator_or_projects_administrator, :only => [ :staff, :search, :add, :remove ]
-  before_filter :ensure_can_edit, :only => [ :edit, :update ]
+  before_filter :ensure_eventgroup_coordinator_or_projects_administrator, :only => [ :remove ]
+  before_filter :ensure_can_edit, :only => [ :edit, :update, :staff, :search, :add ]
   before_filter :set_page_title
   before_filter :set_prefix, :only => [ :search, :add, :remove ]
 
@@ -43,6 +43,7 @@ class ManageProjectsController < ApplicationController
     end
     return true
   end
+  
   
   def set_project
     if (params[:id])
@@ -176,7 +177,7 @@ class ManageProjectsController < ApplicationController
       if @profile.nil?
         @profile = StaffProfile.create :viewer_id => params[:viewer_id], :project_id => params[:project_id]
       elsif @profile.class != StaffProfile
-        @profile.manual_update :type => StaffProfile, :user => @viewer
+        @profile.manual_update :type => StaffProfile # , :user => @viewer 	# why are we setting user?
       end
 
       @success = @success && @profile
@@ -205,7 +206,7 @@ class ManageProjectsController < ApplicationController
         # if 'going' has been unchecked, the staff profile is set to withdrawn
         @profile ||= Withdrawn.find_by_viewer_id_and_project_id viewer.id, @project.id
 
-        @profile.manual_update :type => Withdrawn, :status => :staff_profile_dropped, :user => @viewer
+        @profile.manual_update :type => Withdrawn, :status => :staff_profile_dropped # ,  :user => @viewer	# why are we setting user?
       end
     end
   

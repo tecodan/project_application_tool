@@ -13,7 +13,7 @@ class Campus < ActiveRecord::Base
   	#ministry_student_ids = MinistryRole.all(:conditions => { :type => 'StudentRole' }).compact.collect(&:id)
   	#Person.all :joins => :ministry_involvements, :limit => 2, :conditions => { :ministry_involvements => { :ministry_id => 1, :ministry_role_id => ministry_student_ids }}
 
-    self.people.all(:select => options[:select])
+    self.people.all :conditions => "campus_involvements.end_date is null OR campus_involvements.end_date > curdate()", :select => options[:select]
 
     #campus_involvements.find_all_by_assignmentstatus_id(Assignmentstatus.campus_student_ids,
     #    :select => options[:select]

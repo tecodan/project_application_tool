@@ -12,8 +12,8 @@
             <%= th 'name' %>
             <%= th 'campus' %>
             <%= th 'email' %>
-            <%= th 'permanent phone' %>
             <%= th 'local phone' %>
+            <%= th 'alternate phone' %>
             <!--<%= 'appln (summary)' %>-->
             <%= th 'support claimed', 'currency' %></th>
             <%= th 'support received', 'currency' %></th>
@@ -23,10 +23,10 @@
             <% viewer = acceptance.viewer %>
             <tr>
               <td><%=h viewer.name %></td>
-              <td><%=h viewer.person.campus_shortDesc %></td>
+              <td><%=h viewer.person.campus_abbrev %></td>
               <td><%=h viewer.person.email %></td>
-              <td><%=h viewer.person.person_phone %></td>
-              <td><%=h viewer.person.person_local_phone %></td>
+              <td><%=h viewer.person.local_phone %></td>
+              <td><%=h viewer.person.local_alternate_phone %></td>
               <!--<td><%= link_to "view summary", :controller => "appln", :action => "view_summary", :id => acceptance.id, :project_id => project.id %></td>-->
               <td><%= format_currency acceptance.support_claimed %><br /><%= format_date acceptance.support_claimed_updated_at %></td>
               <td><%= format_currency acceptance.donations_total %></td>
