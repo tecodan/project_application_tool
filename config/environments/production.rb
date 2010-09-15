@@ -31,3 +31,6 @@ ActionMailer::Base.smtp_settings = {
   :address => 'localhost',
   :domain => 'ccca.org.au'
 }
+
+# CAS Single Sign Out
+config.action_controller.session_store = :active_record_store

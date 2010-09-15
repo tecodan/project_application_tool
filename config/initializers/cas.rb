@@ -9,5 +9,6 @@ CASClient::Frameworks::Rails::Filter.configure(
   :proxy_retrieval_url => "https://www.globalshortfilmnetwork.com/cas_proxy_callback/retrieve_pgt",
   :proxy_callback_url => "https://www.globalshortfilmnetwork.com/cas_proxy_callback/receive_pgt",
   # :authenticate_on_every_request => true,
-  :logger => cas_logger
+  :logger => cas_logger,
+  :enable_single_sign_out => true
 )
