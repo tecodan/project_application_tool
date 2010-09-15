@@ -1,0 +1,150 @@
+10:
+  campus_name: UNSW
+  pulse_id: 10
+3:
+  campus_name: USYD
+  pulse_id: 3
+12:
+  campus_name: UTS
+  pulse_id: 12
+41:
+  campus_name: UWA
+  pulse_id: 41
+23:
+  campus_name: Swinburne
+  pulse_id: 23
+13:
+  campus_name: UWS
+  pulse_id: 13
+37:
+  campus_name: Curtin University of Technology
+  pulse_id: 37
+38:
+  campus_name: Edith Cowan University
+  pulse_id: 38
+39:
+  campus_name: Murdoch University
+  pulse_id: 39
+21:
+  campus_name: Melbourne Uni
+  pulse_id: 21
+8:
+  campus_name: SCU
+  pulse_id: 8
+9:
+  campus_name: UNE
+  pulse_id: 9
+26:
+  campus_name: USC
+  pulse_id: 26
+16:
+  campus_name: USQ
+  pulse_id: 16
+2:
+  campus_name: Macquarie
+  pulse_id: 2
+36:
+  campus_name: James cook
+  pulse_id: 36
+17:
+  campus_name: QUT 
+  pulse_id: 17
+11:
+  campus_name: Newcastle
+  pulse_id: 11
+27:
+  campus_name: Deakin Geelong
+  pulse_id: 27
+24:
+  campus_name: Ballarat Uni
+  pulse_id: 24
+54:
+  campus_name: CQU
+  pulse_id: 54
+20:
+  campus_name: Monash Clayton
+  pulse_id: 20
+30:
+  campus_name: Monash Caulfield
+  pulse_id: 30
+75:
+  campus_name: RMIT Bundoora
+  pulse_id: 75
+31:
+  campus_name: RMIT City
+  pulse_id: 31
+72:
+  campus_name: RMIT Other
+  pulse_id: 72
+71:
+  campus_name: RMIT Brunswick
+  pulse_id: 71
+32:
+  campus_name: Victoria Uni City
+  pulse_id: 32
+73:
+  campus_name: Victoria Uni Other
+  pulse_id: 73
+40:
+  campus_name: Notre Dame University Sydney
+  pulse_id: 40
+74:
+  campus_name: Notre Dame University Perth
+  pulse_id: 74
+60:
+  campus_name: Griffith Nathan
+  pulse_id: 60
+25:
+  campus_name: Griffith Mt. Gravatt
+  pulse_id: 25
+67:
+  campus_name: UQ Ipswich
+  pulse_id: 67
+68:
+  campus_name: UQ Gatton
+  pulse_id: 68
+18:
+  campus_name: UQ St. Lucia
+  pulse_id: 18
+69:
+  campus_name: LaTrobe Bundoora
+  pulse_id: 69
+28:
+  campus_name: LaTrobe City
+  pulse_id: 28
+70:
+  campus_name: LaTrobe Other
+  pulse_id: 70
+1:
+  campus_name: Other
+  pulse_id: 1
+63:
+  campus_name: ACU Brisbane
+  pulse_id: 63
+65:
+  campus_name: ACU Fitzroy
+  pulse_id: 65
+64:
+  campus_name: ACU Ballarat
+  pulse_id: 64
+59:
+  campus_name: ACU Sydney
+  pulse_id: 59
+56:
+  campus_name: Deakin Burwood
+  pulse_id: 56
+55:
+  campus_name: Deakin Warrnambool
+  pulse_id: 55
+57:
+  campus_name: Monash Other
+  pulse_id: 57
+61:
+  campus_name: Griffith Logan
+  pulse_id: 61
+66:
+  campus_name: Griffith Gold Coast
+  pulse_id: 66
+62:
+  campus_name: Griffith South Bank
+  pulse_id: 62
