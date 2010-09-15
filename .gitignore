@@ -9,3 +9,4 @@ public/javascripts/as_dd_reorder.js
 public/stylesheets/active_scaffold/
 tmp
 *.swp
+config/environments/production.rb
