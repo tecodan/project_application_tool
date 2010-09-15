@@ -124,7 +124,7 @@ class ProfilesController < ApplicationController
         Profile.create :viewer_id => viewer.id, :project_id => project.id
       else
         if profile.class != StaffProfile then
-          profile.manual_update :type => StaffProfile, :user => @viewer
+          profile.manual_update :type => StaffProfile #, :user => @viewer  # why are we setting user?
           render :inline => 'already created, changed type to StaffProfile'
        else
           render :inline => 'already created, already a StaffProfile'
@@ -133,7 +133,7 @@ class ProfilesController < ApplicationController
     else
       # remove
       if !profile.nil?
-        profile.manual_update :type => Withdrawn, :status => :staff_profile_dropped, :user => @viewer
+        profile.manual_update :type => Withdrawn, :status => :staff_profile_dropped #, :user => @viewer # why are we setting user?
         render :inline => 'withdrawn'
       else
         render :inline => 'tried to withdraw, but didn\'t exist'

@@ -17,7 +17,7 @@
           <%= th '' %>
         </tr></thead><tbody>
         <% for viewer in @viewers %>
-          <tr id="row_<%=viewer.id%>" class="search_result <%= 'inactive' if viewer.viewer_isActive == 0 %>" >
+          <tr id="row_<%=viewer.id%>" class="search_result" >
             <% if viewer.person %>
               <td>yes</td>
             <% else %>
@@ -34,9 +34,9 @@
             </td>
             <td><%=h viewer.id %></td>
             <td><%=h viewer.username %></td>
-            <td><%=h viewer.person.person_email if viewer.person %></td>
-            <td><%=h viewer.person.campus_shortDesc %></td>
-            <td><%=h 'gcx' unless viewer.guid.empty? %></td>
+            <td><%=h viewer.person.current_address.email if viewer.person %></td>
+            <td><%=h viewer.person.campus_abbrev %></td>
+            <td><%=h 'gcx' unless viewer.guid.nil? %></td>
             <td><%=h viewer.profiles.length %></td>
             <td><%=h viewer.viewer_lastLogin %></td>
           <td>
