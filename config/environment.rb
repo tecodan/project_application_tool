@@ -12,6 +12,18 @@ require 'rubygems'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+# some bugfix for when used with Gem >= 1.3.6
+if Gem::VERSION >= "1.3.6"
+  module Rails
+    class GemDependency
+      def requirement
+        r = super
+        (r == Gem::Requirement.default) ? nil : r
+      end
+    end
+  end
+end
+
 module QE
   def self.prefix() 'form_' end
 end
