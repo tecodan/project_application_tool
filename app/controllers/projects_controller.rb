@@ -37,7 +37,7 @@ class ProjectsController < ApplicationController
     # now that filter is set, get all pages
     @pages = @questionnaire.pages
 
-    bulk_forms([ :appln, { :viewer => :persons } ]) do |acc|
+    bulk_forms([ :appln, { :viewer => :person } ]) do |acc|
       @instances << { :instance => acc.appln.processor_form,
         :title => "#{acc.viewer.name} Processor Form",
         :appln => acc.appln

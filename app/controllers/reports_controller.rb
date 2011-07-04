@@ -499,7 +499,7 @@ class ReportsController < ApplicationController
     
     loop_reports_viewers(@projects_ids, @include_pref1_applns, true) do |ac,a,v,p|
       
-      gender = p.gender
+      gender = p.gender.to_s
 
       ec_entry = nil # used in get_passport_info
       ec_entry = p.emerg
@@ -520,14 +520,14 @@ class ReportsController < ApplicationController
                               ec_entry.emerg_contact2Mobile,
                               ec_entry.emerg_contact2Email)
 
-      emergency_info = EmergencyInfo.new(ec_entry.emerg_medicalNotes, ec_entry.emerg_meds)
+      emergency_info = EmergencyInfo.new(ec_entry.notes, ec_entry.meds)
 
-      birthdate = ec_entry ? ec_entry.emerg_birthdate : ''
+      birthdate = ec_entry ? p.birth_date : ''
       birthdate = birthdate.to_s # might be nil
 
       passport_info = get_passport_info(ac, p, a, ec_entry)
       
-      hp = ec_entry.health_state.try(:name)
+      hp = ec_entry.health_coverage_state.try(:name)
       health_info = HealthInfo.new(ec_entry.health_number, hp)
       ins_info = InsuranceInfo.new(ec_entry.medical_plan_carrier, ec_entry.medical_plan_number)
       doc_info = DoctorsInfo.new(ec_entry.doctor_name.to_s, ec_entry.doctor_phone.to_s,
@@ -1168,9 +1168,9 @@ class ReportsController < ApplicationController
 
   def get_passport_info(ac, p, a, ec_entry)
     if ec_entry
-        PassportInfo.new(ec_entry.emerg_passportNum,
-          ec_entry.emerg_passportExpiry,
-          ec_entry.emerg_passportOrigin)
+        PassportInfo.new(ec_entry.passport_num,
+          ec_entry.passport_expiry,
+          ec_entry.passport_origin)
     else
       PassportInfo.new('', '', '')
     end
