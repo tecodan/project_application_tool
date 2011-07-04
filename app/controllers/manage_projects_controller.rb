@@ -11,8 +11,8 @@ class ManageProjectsController < ApplicationController
   before_filter :set_project, :except => [ :index, :list, :create, :new ]
   before_filter :determine_project_roles, :except => [ :index, :list, :new, :create ]
   before_filter :ensure_is_eventgroup_coordinator, :only => [ :new, :create, :destroy ]
-  before_filter :ensure_eventgroup_coordinator_or_projects_administrator, :only => [ :remove ]
-  before_filter :ensure_can_edit, :only => [ :edit, :update, :staff, :search, :add ]
+  before_filter :ensure_eventgroup_coordinator_or_projects_administrator, :only => [ :staff, :search, :add, :remove ]
+  before_filter :ensure_can_edit, :only => [ :edit, :update ]
   before_filter :set_page_title
   before_filter :set_prefix, :only => [ :search, :add, :remove ]
 
