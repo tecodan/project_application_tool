@@ -4,6 +4,7 @@ namespace :db do
     desc "Process uploaded CSV file containing donation information and update PAT DB"
     task :process_donations => :environment do
 		require 'csv'
+		Time.zone = 'UTC'
 		puts "This is the donation processing script"
 		
 		# find all .csv files
@@ -55,8 +56,9 @@ namespace :db do
 				end
 				puts "# Adding row to database" unless update_donation
 				# Refactor incoming date from dd/mm/yyyy to yyyy-mm-dd
-				date_split = trans_date.split(/\//)
-				formatted_date = date_split[2] + "-" + date_split[1] + "-" + date_split[0]
+				date_split = trans_date.split(/\-/)
+				formatted_date = Time.zone.local(date_split[0].to_i, date_split[1].to_i, date_split[2].to_i, 0, 0, 0)
+				# formatted_date = date_split[2] + "-" + date_split[1] + "-" + date_split[0]
 				if update_donation then
 				  donation.participant_motv_code = motvcode
 				  donation.participant_external_id = extid
